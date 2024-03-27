@@ -478,12 +478,9 @@ class SafariBooks:
         response = self.requests_provider(
             self.LOGIN_URL,
             is_post=True,
-            json={
-                "email": email,
-                "password": password,
-                "redirect_uri": redirect_uri
-            },
-            perform_redirect=False
+            json={"email": email, "password": password, "redirect_uri": redirect_uri},
+            # perform_redirect=False
+            perform_redirect=True,
         )
 
         if response == 0:
@@ -516,7 +513,7 @@ class SafariBooks:
             self.display.exit("Login: unable to reach Safari Books Online. Try again...")
 
     def check_login(self):
-        response = self.requests_provider(PROFILE_URL, perform_redirect=False)
+        response = self.requests_provider(PROFILE_URL, perform_redirect=True)
 
         if response == 0:
             self.display.exit("Login: unable to reach Safari Books Online. Try again...")

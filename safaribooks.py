@@ -21,9 +21,10 @@ from urllib.parse import urljoin, urlparse, parse_qs, quote_plus
 PATH = os.path.dirname(os.path.realpath(__file__))
 COOKIES_FILE = os.path.join(PATH, "cookies.json")
 
-ORLY_BASE_HOST = "oreilly.com"  # PLEASE INSERT URL HERE
+# ORLY_BASE_HOST = "oreilly.com"  # PLEASE INSERT URL HERE
+ORLY_BASE_HOST = "ezproxy.berkeleypubliclibrary.org"  # PLEASE INSERT URL HERE
 
-SAFARI_BASE_HOST = "learning." + ORLY_BASE_HOST
+SAFARI_BASE_HOST = "learning-oreilly-com." + ORLY_BASE_HOST
 API_ORIGIN_HOST = "api." + ORLY_BASE_HOST
 
 ORLY_BASE_URL = "https://www." + ORLY_BASE_HOST
@@ -1069,7 +1070,15 @@ if __name__ == "__main__":
         "--login", action='store_true',
         help="Prompt for credentials used to perform the auth login on Safari Books Online."
     )
-
+    # TODO probably need to split into both ORLY and Safari host flags
+    arguments.add_argument(
+        "--safari-base-host",
+        dest="host_url",
+        default=SAFARI_BASE_HOST,
+        help="URL of the Safari Books Online website. Should be used when"
+        " attempting to use a group subscription behind a proxy. Default: "
+        + SAFARI_BASE_HOST,
+    )
     arguments.add_argument(
         "--no-cookies", dest="no_cookies", action='store_true',
         help="Prevent your session data to be saved into `cookies.json` file."

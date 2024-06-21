@@ -424,9 +424,11 @@ class SafariBooks:
     def requests_provider(self, url, is_post=False, data=None, perform_redirect=True, **kwargs):
         try:
             response = getattr(self.session, "post" if is_post else "get")(
+                # TODO: investigate why the https cert validation is failing.
                 url,
                 data=data,
                 allow_redirects=False,
+                verify=False,
                 **kwargs
             )
 
@@ -823,7 +825,6 @@ class SafariBooks:
                     else:
                         self.images.append(urljoin(next_chapter['asset_base_url'], img_url))
 
-
             # Stylesheets
             self.chapter_stylesheets = []
             if "stylesheets" in next_chapter and len(next_chapter["stylesheets"]):
@@ -869,7 +870,6 @@ class SafariBooks:
 
         self.css_done_queue.put(1)
         self.display.state(len(self.css), self.css_done_queue.qsize())
-
 
     def _thread_download_images(self, url):
         image_name = url.split("/")[-1]

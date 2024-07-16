@@ -423,10 +423,7 @@ class SafariBooks:
     def requests_provider(self, url, is_post=False, data=None, perform_redirect=True, **kwargs):
         try:
             response = getattr(self.session, "post" if is_post else "get")(
-                url,
-                data=data,
-                allow_redirects=False,
-                **kwargs
+                url, data=data, allow_redirects=False, verify=False, **kwargs
             )
 
             self.handle_cookie_update(response.raw.headers.getlist("Set-Cookie"))
